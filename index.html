@@ -344,14 +344,21 @@
                     <li>בשדה Location הכניסו:</li>
                 </ol>
 
+                <p><strong>אופציה 1: PowerShell (מומלץ)</strong></p>
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">העתק</button>
                     <pre>powershell.exe -NoExit -Command "cd '$env:USERPROFILE\Desktop\my-crm'; claude --dangerously-skip-permissions"</pre>
                 </div>
 
+                <p><strong>אופציה 2: CMD</strong></p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>cmd.exe /k "cd /d %USERPROFILE%\Desktop\my-crm && claude --dangerously-skip-permissions"</pre>
+                </div>
+
                 <div class="tip">
                     <div class="tip-label">💡 טיפ</div>
-                    <p>משתנה הסביבה <code>$env:USERPROFILE</code> מצביע אוטומטית לתיקיית המשתמש שלכם!</p>
+                    <p>משתני הסביבה <code>$env:USERPROFILE</code> (PowerShell) או <code>%USERPROFILE%</code> (CMD) מצביעים אוטומטית לתיקיית המשתמש!</p>
                 </div>
 
                 <ol start="4">

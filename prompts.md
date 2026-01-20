@@ -6,12 +6,17 @@ All prompts used in the workshop tutorial, ready for copy-paste.
 
 ## 1. Windows Shortcut Setup for Claude Code
 
-**Shortcut Target:**
+**Option 1: PowerShell (Recommended)**
 ```
 powershell.exe -NoExit -Command "cd '$env:USERPROFILE\Desktop\my-crm'; claude --dangerously-skip-permissions"
 ```
 
-The `$env:USERPROFILE` variable automatically points to the user's folder (e.g., `C:\Users\John`).
+**Option 2: CMD**
+```
+cmd.exe /k "cd /d %USERPROFILE%\Desktop\my-crm && claude --dangerously-skip-permissions"
+```
+
+The environment variables `$env:USERPROFILE` (PowerShell) or `%USERPROFILE%` (CMD) automatically point to the user's folder.
 
 ---
 
