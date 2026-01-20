@@ -356,9 +356,15 @@
                     <pre>cmd.exe /k "cd /d %USERPROFILE%\Desktop\my-crm && claude --dangerously-skip-permissions"</pre>
                 </div>
 
+                <p><strong>אופציה 3: נתיב ידני</strong> (אם האופציות למעלה לא עובדות)</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>cmd.exe /k "cd /d C:\Users\YOUR_USERNAME\Desktop\my-crm && claude --dangerously-skip-permissions"</pre>
+                </div>
+
                 <div class="tip">
                     <div class="tip-label">💡 טיפ</div>
-                    <p>משתני הסביבה <code>$env:USERPROFILE</code> (PowerShell) או <code>%USERPROFILE%</code> (CMD) מצביעים אוטומטית לתיקיית המשתמש!</p>
+                    <p>באופציה 3, החליפו את <code>YOUR_USERNAME</code> בשם המשתמש שלכם (למשל: <code>C:\Users\David\Desktop\my-crm</code>)</p>
                 </div>
 
                 <ol start="4">
