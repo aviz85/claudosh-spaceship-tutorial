@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קלודוש - מצב חללית | מדריך מעשי</title>
+    <style>
+        :root {
+            --green: #22C55E;
+            --green-dark: #16A34A;
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+            --border: #333;
+            --text: #e5e5e5;
+            --text-muted: #888;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--card) 0%, #252525 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .step:hover {
+            border-color: var(--green);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            background: var(--green);
+            color: #000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            flex-grow: 1;
+        }
+
+        .step-time {
+            background: #333;
+            color: var(--text-muted);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .step-content {
+            padding-right: 3.5rem;
+        }
+
+        .step-content p {
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            position: relative;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .code-block pre {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            direction: ltr;
+            text-align: left;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: var(--green);
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--green-dark);
+        }
+
+        .copy-btn.copied {
+            background: #666;
+        }
+
+        .prompt-block {
+            background: linear-gradient(135deg, #1a2a1a 0%, #1a1a1a 100%);
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .prompt-label {
+            position: absolute;
+            top: -10px;
+            right: 1rem;
+            background: var(--green);
+            color: #000;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .prompt-block pre {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--green);
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+            margin: 0.5rem 0;
+        }
+
+        .download-btn:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+        }
+
+        .tip {
+            background: #2a2a1a;
+            border-right: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-label {
+            color: #f59e0b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .golden-step {
+            background: linear-gradient(135deg, #2a2a1a 0%, #1a1a1a 100%);
+            border: 2px solid #f59e0b;
+            position: relative;
+        }
+
+        .golden-step .step-number {
+            background: linear-gradient(135deg, #f59e0b 0%, #eab308 100%);
+        }
+
+        .golden-badge {
+            position: absolute;
+            top: -12px;
+            left: 1rem;
+            background: linear-gradient(135deg, #f59e0b 0%, #eab308 100%);
+            color: #000;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-right: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: #333;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            direction: ltr;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 3rem 0;
+            color: var(--text-muted);
+        }
+
+        .section-divider span {
+            background: var(--bg);
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: var(--border);
+            z-index: -1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--green);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .step-content {
+                padding-right: 0;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 קלודוש - מצב חללית</h1>
+            <p class="subtitle">מדריך מעשי לבניית Agentic App עם Claude Code</p>
+            <p class="subtitle" style="margin-top: 0.5rem; color: var(--green);">⏱️ משך כולל: שעה וחצי (90 דקות)</p>
+        </header>
+
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">יצירת תיקיית הפרויקט</div>
+                <span class="step-time">1 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>נתחיל ביצירת תיקייה חדשה על שולחן העבודה בשם <code>my-crm</code>:</p>
+                <ol>
+                    <li>לחצו קליק ימני על שולחן העבודה</li>
+                    <li>בחרו <strong>New → Folder</strong></li>
+                    <li>קראו לתיקייה: <code>my-crm</code></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">יצירת קיצור דרך ל-Claude Code</div>
+                <span class="step-time">3 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>ניצור קיצור דרך שיפתח את Claude Code ישירות בתיקייה שלנו:</p>
+                <ol>
+                    <li>לחצו קליק ימני על שולחן העבודה</li>
+                    <li>בחרו <strong>New → Shortcut</strong></li>
+                    <li>בשדה Location הכניסו:</li>
+                </ol>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>powershell.exe -NoExit -Command "cd '$env:USERPROFILE\Desktop\my-crm'; claude --dangerously-skip-permissions"</pre>
+                </div>
+
+                <div class="tip">
+                    <div class="tip-label">💡 טיפ</div>
+                    <p>משתנה הסביבה <code>$env:USERPROFILE</code> מצביע אוטומטית לתיקיית המשתמש שלכם!</p>
+                </div>
+
+                <ol start="4">
+                    <li>לחצו Next ותנו שם לקיצור: <code>Claude - My CRM</code></li>
+                    <li>לחצו Finish</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">הגדרת הרשאות מנהל</div>
+                <span class="step-time">2 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>נגדיר שהקיצור יפעל עם הרשאות מנהל:</p>
+                <ol>
+                    <li>לחצו קליק ימני על הקיצור שיצרנו</li>
+                    <li>בחרו <strong>Properties</strong></li>
+                    <li>בלשונית <strong>Shortcut</strong> לחצו על <strong>Advanced...</strong></li>
+                    <li>סמנו ✅ <strong>Run as administrator</strong></li>
+                    <li>לחצו OK → Apply → OK</li>
+                </ol>
+
+                <div class="tip">
+                    <div class="tip-label">💡 למה צריך הרשאות מנהל?</div>
+                    <p>חלק מהפעולות של Claude Code (כמו התקנת packages) דורשות הרשאות גבוהות</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">הורדת נתוני ה-CRM</div>
+                <span class="step-time">2 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>הורידו את קובץ נתוני הלקוחות לתוך תיקיית <code>my-crm</code>:</p>
+
+                <a href="mock_crm_data.xlsx" download class="download-btn">
+                    📥 הורדת mock_crm_data.xlsx
+                </a>
+
+                <p>הקובץ מכיל:</p>
+                <ul>
+                    <li><strong>לקוחות</strong> - 50 לקוחות עם פרטי קשר</li>
+                    <li><strong>היסטוריית רכישות</strong> - מה כל לקוח קנה</li>
+                    <li><strong>תקשורת</strong> - היסטוריית שיחות ומיילים</li>
+                    <li><strong>פרופיל מורחב</strong> - מקצוע, תחומי עניין, ציון</li>
+                    <li><strong>משימות</strong> - מעקב ותזכורות</li>
+                    <li><strong>סטטיסטיקות</strong> - סיכום נתונים</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>⚙️ הגדרת Claude Code</span>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">הפעלת Claude Code ולמידה על Primitives</div>
+                <span class="step-time">8 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>פתחו את Claude Code דרך הקיצור שיצרנו, ובקשו ממנו ללמוד על היכולות:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>אני רוצה לבנות "Agentic App" - אפליקציה שמופעלת על ידי Claude Code.
+
+לפני שנתחיל, אני צריך שתלמד על הפרימיטיבים של Claude Code:
+1. Skills - מה זה ואיך יוצרים
+2. Commands - פקודות מותאמות אישית
+3. Agents - סוכנים שרצים ברקע
+4. CLAUDE.md - קובץ הכללים
+
+השתמש ב-claude-code-guide agent כדי ללמוד על כל אחד מהם ותן לי סיכום קצר.</pre>
+                </div>
+
+                <p>Claude Code ישתמש ב-agent פנימי כדי ללמוד על היכולות ויסכם לכם.</p>
+            </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">יצירת CLAUDE.md - קובץ הכללים</div>
+                <span class="step-time">7 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>ניצור קובץ כללים שילמד את Claude Code איך לעבוד בפרויקט שלנו:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>צור קובץ CLAUDE.md לפרויקט שלנו עם הכללים הבאים:
+
+# My CRM - Business Management System
+
+## Project Overview
+מערכת ניהול לקוחות לעסק שמוכר קורסים וסדנאות בתחום ה-AI.
+
+## Data Files
+- `mock_crm_data.xlsx` - נתוני לקוחות ורכישות
+
+## Rules
+1. כל המסמכים יהיו בעברית
+2. עיצוב מקצועי ונקי
+3. שמירת קבצים בתיקיית `documents/`
+
+## Claude Code Learning Rule
+**חשוב מאוד:** בכל פעם שמדברים על אחד מהנושאים הבאים של Claude Code:
+- Skills
+- Commands
+- Agents
+- CLAUDE.md
+- Hooks
+
+עליך להשתמש ב-`claude-code-guide` agent כדי לקבל מידע מדויק ועדכני לפני שאתה עונה או מבצע.</pre>
+                </div>
+
+                <div class="tip">
+                    <div class="tip-label">🎯 למה זה חשוב?</div>
+                    <p>הכלל האחרון מבטיח שכל פעם ש-Claude Code צריך לעבוד עם הפרימיטיבים שלו, הוא יבדוק קודם את התיעוד העדכני!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>🛠️ התקנת כלים</span>
+        </div>
+
+        <!-- STEP 7 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <div class="step-title">התקנת Skill: HTML to PDF</div>
+                <span class="step-time">10 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>נתקין skill שמאפשר יצירת מסמכי PDF מ-HTML:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>התקן את ה-skill של html-to-pdf מספריית aviz85.
+
+הריצו את הפקודה הבאה בטרמינל:
+npx add-skill aviz85/claude-skills-library -s html-to-pdf -y
+
+אחרי ההתקנה, התקן את ה-dependencies:
+cd .claude/skills/html-to-pdf && npm install
+
+ואז תסביר לי איך להשתמש ב-skill הזה.</pre>
+                </div>
+
+                <p>פקודות נוספות שימושיות:</p>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre># לראות את כל ה-skills הזמינים בספרייה
+npx add-skill aviz85/claude-skills-library --list
+
+# להתקין skill גלובלי (לכל הפרויקטים)
+npx add-skill aviz85/claude-skills-library -s html-to-pdf -g</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 8 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <div class="step-title">יצירת הצעת מחיר ראשונה</div>
+                <span class="step-time">8 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>נשתמש ב-skill שהתקנו כדי ליצור הצעת מחיר ללקוח מה-CRM:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>קרא את קובץ ה-CRM ומצא לקוח שמתאים לקורס AI למתחילים.
+
+צור לו הצעת מחיר מקצועית בעברית שכוללת:
+- פרטי הלקוח
+- תיאור המוצר
+- מחיר והנחה אפשרית
+- תנאי תשלום
+- תוקף ההצעה
+
+השתמש ב-html-to-pdf skill כדי ליצור PDF מעוצב.
+שמור את הקובץ בתיקיית documents/</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 9 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <div class="step-title">יצירת Skill מותאם אישית להצעות מחיר</div>
+                <span class="step-time">12 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>נייצר skill משלנו שייצור הצעות מחיר בדיוק כמו שאנחנו רוצים:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>צור skill חדש בשם "create-quotation" שייצור הצעות מחיר.
+
+לפני שאתה יוצר, השתמש ב-claude-code-guide agent כדי ללמוד איך ליצור skill נכון.
+
+הSkill צריך:
+1. לקבל שם לקוח ומוצר
+2. לקרוא את פרטי הלקוח מה-CRM
+3. ליצור HTML מעוצב עם:
+   - כותרת "הצעת מחיר"
+   - תאריך ומספר הצעה
+   - פרטי לקוח
+   - טבלת מוצרים ומחירים
+   - סה"כ לתשלום
+   - תנאים והגבלות
+4. להשתמש ב-html-to-pdf skill ליצירת ה-PDF
+5. לשמור בתיקיית documents/quotations/
+
+העיצוב: צבעים ירוקים (#22C55E), פונט נקי, RTL</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 10 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">10</div>
+                <div class="step-title">הוספת לוגו לחברה</div>
+                <span class="step-time">5 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>הורידו את הלוגו והוסיפו אותו לפרויקט:</p>
+
+                <a href="assets/company_logo.png" download class="download-btn">
+                    📥 הורדת company_logo.png
+                </a>
+
+                <p>שמרו את הלוגו בתיקייה <code>my-crm/assets/</code></p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>עדכן את ה-skill של create-quotation כך שישתמש בלוגו:
+
+1. הלוגו נמצא ב: assets/company_logo.png
+2. הוסף את הלוגו בראש כל הצעת מחיר
+3. עדכן את ה-CLAUDE.md עם נתיב הלוגו
+
+בדוק שהכל עובד על ידי יצירת הצעת מחיר חדשה.</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>📦 פרויקט המוצרים</span>
+        </div>
+
+        <!-- STEP 11 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">11</div>
+                <div class="step-title">יצירת פרויקט המוצרים</div>
+                <span class="step-time">5 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>ניצור פרויקט חדש לניהול המוצרים שלנו:</p>
+                <ol>
+                    <li>צרו תיקייה חדשה על שולחן העבודה: <code>my-products</code></li>
+                    <li>צרו קיצור דרך נוסף ל-Claude Code (כמו בשלב 2-3)</li>
+                    <li>הורידו את קובץ המוצרים:</li>
+                </ol>
+
+                <a href="products.zip" download class="download-btn">
+                    📥 הורדת products.zip
+                </a>
+
+                <p>חלצו את הקובץ לתוך תיקיית <code>my-products</code></p>
+            </div>
+        </div>
+
+        <!-- STEP 12 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">12</div>
+                <div class="step-title">הגדרת פרויקט המוצרים</div>
+                <span class="step-time">5 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>פתחו Claude Code בתיקיית my-products והגדירו את הפרויקט:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>זהו פרויקט לניהול קטלוג המוצרים שלנו.
+
+צור CLAUDE.md עם:
+- תיאור הפרויקט (קטלוג קורסים וסדנאות AI)
+- מבנה התיקיות (products/ עם תת-תיקייה לכל מוצר)
+- כל מוצר מכיל product.md ו-ad.jpg
+
+סרוק את המוצרים הקיימים ותן לי סיכום של מה יש לנו.</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>✨ הקסם האמיתי</span>
+        </div>
+
+        <!-- GOLDEN STEP -->
+        <div class="step golden-step">
+            <span class="golden-badge">⭐ THE GOLDEN STEP</span>
+            <div class="step-header">
+                <div class="step-number">13</div>
+                <div class="step-title">הסוכן שמחבר הכל - המלצות חכמות</div>
+                <span class="step-time">18 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p><strong>זה הרגע הקסום!</strong> ניצור agent שמסתכל על ה-CRM ועל המוצרים ומייצר המלצות מותאמות אישית.</p>
+
+                <p>חזרו לפרויקט <code>my-crm</code> והפעילו את הפרומפט הבא:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>צור skill חדש בשם "generate-recommendations" שעושה את הדבר הבא:
+
+1. קורא את נתוני הלקוחות מ-mock_crm_data.xlsx
+2. קורא את קטלוג המוצרים מתיקיית my-products (השתמש ב-/add-dir להוסיף אותה)
+3. לכל לקוח, מנתח:
+   - מה הוא כבר קנה (היסטוריית רכישות)
+   - מה תחומי העניין שלו (פרופיל מורחב)
+   - מה הסטטוס שלו (VIP? ליד חדש?)
+4. מייצר המלצות מותאמות אישית:
+   - איזה מוצר להציע לו (upsale)
+   - הודעת וואטסאפ מותאמת בעברית
+   - סיבה להמלצה
+
+לפני שאתה יוצר את ה-skill, השתמש ב-claude-code-guide agent כדי ללמוד איך ליצור skill שמשתמש ב-/add-dir לעבודה חוצת פרויקטים.
+
+הפלט: קובץ recommendations.md עם טבלה של כל הלקוחות וההמלצות שלהם.</pre>
+                </div>
+
+                <div class="tip">
+                    <div class="tip-label">🎯 למה זה קסם?</div>
+                    <p>עכשיו יש לנו סוכן שאפשר להפעיל בכל רגע ולקבל המלצות מותאמות אישית לכל לקוח - בהתבסס על מה שהוא קנה ומה שיש לנו להציע!</p>
+                </div>
+
+                <p><strong>עכשיו נבדוק שזה עובד:</strong></p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>/generate-recommendations
+
+הרץ את הסוכן וצור המלצות לכל הלקוחות.</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- BONUS -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">🎁</div>
+                <div class="step-title">בונוס: שליחת הודעות מותאמות</div>
+                <span class="step-time">4 דק׳</span>
+            </div>
+            <div class="step-content">
+                <p>אם יש לכם skill לשליחת וואטסאפ, אפשר לחבר הכל:</p>
+
+                <div class="prompt-block">
+                    <span class="prompt-label">PROMPT</span>
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre>קרא את קובץ ההמלצות שיצרנו.
+בחר 3 לקוחות VIP והצג לי את ההודעות המותאמות שלהם.
+
+(רק להצגה - בלי לשלוח באמת!)</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🚀 קלודוש - מצב חללית | 20.01.2026</p>
+            <p>נבנה עם ❤️ על ידי <a href="#">אביץ הארכיטקט</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function copyCode(btn) {
+            const codeBlock = btn.parentElement;
+            const pre = codeBlock.querySelector('pre');
+            const text = pre.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'הועתק! ✓';
+                btn.classList.add('copied');
+
+                setTimeout(() => {
+                    btn.textContent = 'העתק';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
