@@ -335,47 +335,33 @@
             <div class="step-header">
                 <div class="step-number">2</div>
                 <div class="step-title">הוספת Claude Code לתפריט קליק ימני</div>
-                <span class="step-time">3 דק׳</span>
+                <span class="step-time">1 דק׳</span>
             </div>
             <div class="step-content">
                 <p>נוסיף אפשרות לפתוח Claude Code <strong>בכל תיקייה</strong> דרך קליק ימני:</p>
 
                 <ol>
-                    <li>פתחו את Claude Code בתיקיית <code>my-crm</code> (אפשר מתוך VS Code או Terminal)</li>
-                    <li>העתיקו את הפרומפט הבא ל-Claude:</li>
+                    <li>הורידו את הקובץ:</li>
                 </ol>
 
-                <div class="prompt-block">
-                    <span class="prompt-label">PROMPT</span>
-                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                    <pre>Add "Open With Claude Code" to my Windows right-click context menu.
+                <a href="add_claude_context_menu.bat" download class="download-btn">
+                    📥 הורדת add_claude_context_menu.bat
+                </a>
 
-Create a .bat file that modifies the registry to add:
-1. "Open With Claude Code" - when right-clicking ON a folder
-2. "Open With Claude Code" - when right-clicking on empty space INSIDE a folder
-3. "Open With Claude Code (Admin)" - with administrator privileges (UAC shield icon)
-
-Requirements:
-- PowerShell window should open at the folder path
-- The `claude` command should run automatically
-- Use -NoExit so the window stays open
-- The BAT file must be run as administrator
-
-Also create a second BAT file to remove these entries if needed.
-
-Save both files to the current directory.</pre>
-                </div>
-
-                <ol start="3">
-                    <li>Claude ייצור שני קבצי BAT</li>
-                    <li>לחצו קליק ימני על <code>add_claude_context_menu.bat</code> → <strong>Run as administrator</strong></li>
+                <ol start="2">
+                    <li>קליק ימני על הקובץ → <strong>Run as administrator</strong></li>
                     <li>זהו! ✅ עכשיו תוכלו ללחוץ ימני על כל תיקייה ולבחור <strong>"Open With Claude Code"</strong></li>
                 </ol>
 
                 <div class="tip">
-                    <div class="tip-label">🛡️ הרשאות מנהל</div>
-                    <p>האופציה "Open With Claude Code (Admin)" תפתח עם הרשאות מנהל - שימושי להתקנת packages</p>
+                    <div class="tip-label">🛡️ שתי אפשרויות בתפריט</div>
+                    <p><strong>Open With Claude Code</strong> - רגיל<br>
+                    <strong>Open With Claude Code (Admin)</strong> - עם הרשאות מנהל (מגן UAC)</p>
                 </div>
+
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+                    להסרה: <a href="remove_claude_context_menu.bat" download style="color: var(--green);">remove_claude_context_menu.bat</a>
+                </p>
             </div>
         </div>
 
