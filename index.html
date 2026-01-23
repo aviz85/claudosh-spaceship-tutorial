@@ -380,21 +380,39 @@
             <div class="step-header">
                 <div class="step-number">3</div>
                 <div class="step-title">הגדרת הרשאות מנהל</div>
-                <span class="step-time">2 דק׳</span>
+                <span class="step-time">3 דק׳</span>
             </div>
             <div class="step-content">
-                <p>נגדיר שהקיצור יפעל עם הרשאות מנהל:</p>
+                <p>נגדיר שהקיצור יפעל תמיד עם הרשאות מנהל (Administrator):</p>
+
+                <p><strong>🔹 אפשרות א׳: הגדרה קבועה (מומלץ)</strong></p>
                 <ol>
-                    <li>לחצו קליק ימני על הקיצור שיצרנו</li>
-                    <li>בחרו <strong>Properties</strong></li>
-                    <li>בלשונית <strong>Shortcut</strong> לחצו על <strong>Advanced...</strong></li>
-                    <li>סמנו ✅ <strong>Run as administrator</strong></li>
-                    <li>לחצו OK → Apply → OK</li>
+                    <li><strong>קליק ימני</strong> על הקיצור שיצרנו בשלב הקודם</li>
+                    <li>בתפריט שנפתח, בחרו <strong>Properties</strong> (מאפיינים) - האפשרות האחרונה בתפריט</li>
+                    <li>יפתח חלון. וודאו שאתם בלשונית <strong>Shortcut</strong></li>
+                    <li>לחצו על הכפתור <strong>Advanced...</strong> (בתחתית החלון)</li>
+                    <li>יפתח חלון קטן. סמנו ✅ את התיבה: <strong>Run as administrator</strong></li>
+                    <li>לחצו <strong>OK</strong> לסגירת החלון הקטן</li>
+                    <li>לחצו <strong>Apply</strong> (החל) ואז <strong>OK</strong></li>
+                </ol>
+                <p style="color: var(--green); font-size: 0.9rem;">✓ מעכשיו, בכל פעם שתלחצו דאבל-קליק על הקיצור הוא יפעל כמנהל!</p>
+
+                <p style="margin-top: 1.5rem;"><strong>🔹 אפשרות ב׳: הפעלה חד-פעמית כמנהל</strong></p>
+                <p>אם אתם רוצים להפעיל כמנהל רק פעם אחת:</p>
+                <ol>
+                    <li><strong>קליק ימני</strong> על הקיצור</li>
+                    <li>בחרו <strong>Run as administrator</strong> (הפעל כמנהל מערכת)</li>
+                    <li>יופיע חלון אישור (UAC) - לחצו <strong>Yes</strong></li>
                 </ol>
 
                 <div class="tip">
                     <div class="tip-label">💡 למה צריך הרשאות מנהל?</div>
-                    <p>חלק מהפעולות של Claude Code (כמו התקנת packages) דורשות הרשאות גבוהות</p>
+                    <p>חלק מהפעולות של Claude Code (כמו התקנת packages) דורשות הרשאות גבוהות. בלי הרשאות מנהל, חלק מהפקודות יכשלו.</p>
+                </div>
+
+                <div class="tip" style="background: #1a2a2a; border-right-color: var(--green);">
+                    <div class="tip-label" style="color: var(--green);">🖥️ איך יודעים שזה עובד?</div>
+                    <p>כשתפעילו את הקיצור, יופיע חלון שחור של User Account Control (UAC) ששואל "Do you want to allow this app to make changes?" - לחצו <strong>Yes</strong>. זה סימן שההרשאות עובדות!</p>
                 </div>
             </div>
         </div>
@@ -543,6 +561,24 @@ npx add-skill aviz85/claude-skills-library --list
 # להתקין skill גלובלי (לכל הפרויקטים)
 npx add-skill aviz85/claude-skills-library -s html-to-pdf -g</pre>
                 </div>
+
+                <div class="tip">
+                    <div class="tip-label">🌐 skills.sh - ספריית Skills ציבורית</div>
+                    <p>אפשר להתקין skills גם מ-<a href="https://skills.sh" target="_blank" style="color: var(--green)">skills.sh</a> - ספריה ציבורית עם אלפי skills מוכנים לשימוש:</p>
+                </div>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                    <pre># התקנה מ-skills.sh (פורמט: owner/repo)
+npx skills add anthropics/skills
+
+# דוגמאות פופולריות:
+npx skills add vercel-labs/agent-skills
+npx skills add expo/skills
+npx skills add trailofbits/skills</pre>
+                </div>
+
+                <p style="font-size: 0.9rem; color: var(--text-muted);">בקרו ב-<a href="https://skills.sh" target="_blank" style="color: var(--green)">skills.sh</a> לראות את כל ה-skills הזמינים (22K+ התקנות לחלקם!)</p>
             </div>
         </div>
 
